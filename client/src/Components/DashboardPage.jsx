@@ -6,7 +6,24 @@ import { AuthContext } from "../context/authContextValue";
 import { deleteResume, getHistory, uploadResume } from "../services/resumeService";
 import getErrorMessage from "../utils/getErrorMessage";
 import DashboardSidebar from "./DashboardSidebar";
+const getGreeting = () => {
 
+  const hour = new Date().getHours();
+
+  if (hour >= 5 && hour < 12) {
+    return "Good Morning";
+  }
+
+  if (hour >= 12 && hour < 17) {
+    return "Good Afternoon";
+  }
+
+  if (hour >= 17 && hour < 21) {
+    return "Good Evening";
+  }
+
+  return "Good Night";
+};
 const DashboardPage = () => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -153,8 +170,7 @@ const DashboardPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1>Good morning, {user?.name || "candidate"}</h1>
-
+<h1>{getGreeting()}, {user?.name || "candidate"}</h1>
           <p>
             Your resume intelligence suite is ready. Upload a PDF resume to
             generate ATS scoring, keyword gaps, formatting feedback, and
