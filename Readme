@@ -1,0 +1,24 @@
+# ResumAI
+
+AI-powered ATS Resume Analyzer
+
+## Tech Stack
+
+- React + Vite
+- Node.js + Express
+- MongoDB
+- AWS S3
+- Grok AI
+- Framer Motion
+
+## Setup
+
+### Client
+
+npm install
+npm run dev
+
+### Server
+
+npm install
+npm run dev
