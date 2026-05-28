@@ -1,0 +1,23 @@
+ResumAI Analysis Report
+ATS Score: 85%
+
+Strengths:
+- Strong educational background in Computer Science
+- Hands-on experience in web development and backend integration
+- Proficiency in modern technologies such as React.js, Node.js, and MongoDB
+
+Weaknesses:
+- Limited work experience
+- Lack of experience in cloud computing and cybersecurity
+
+Missing Keywords:
+- Cloud computing platforms such as AWS or Azure
+- Cybersecurity certifications or training
+
+Formatting Feedback:
+- Use a standard font throughout the resume
+- Use bullet points to break up large blocks of text and make the resume easier to read
+
+Suggestions:
+- Consider taking online courses or certifications to improve cloud computing and cybersecurity skills
+- Look for internships or co-op programs to gain more work experience
