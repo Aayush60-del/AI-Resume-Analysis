@@ -1,13 +1,33 @@
 import axios from "axios";
 import { triggerUnauthorized } from "../utils/authSession";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL
+  ? import.meta.env.VITE_API_URL
+  : import.meta.env.DEV
+    ? "/api"
+    : "";
+
+if (!API_BASE_URL && import.meta.env.PROD) {
+  console.error(
+    "[ResumAI] VITE_API_URL is not set. Add it in Vercel → Settings → Environment Variables."
+  );
+}
+
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "/api",
+  baseURL: API_BASE_URL || "/api",
   timeout: 120000,
 });
 
 API.interceptors.request.use(
   (config) => {
+    if (!API_BASE_URL && import.meta.env.PROD) {
+      return Promise.reject(
+        new Error(
+          "API URL not configured. Set VITE_API_URL on Vercel to your Render backend (e.g. https://your-app.onrender.com/api)."
+        )
+      );
+    }
+
     const token = localStorage.getItem("token");
 
     if (token) {
@@ -30,4 +50,5 @@ API.interceptors.response.use(
   }
 );
 
+export { API_BASE_URL };
 export default API;

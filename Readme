@@ -4,21 +4,72 @@ AI-powered ATS Resume Analyzer
 
 ## Tech Stack
 
-- React + Vite
-- Node.js + Express
+- React + Vite (Vercel)
+- Node.js + Express (Render)
 - MongoDB
 - AWS S3
-- Grok AI
-- Framer Motion
+- Groq AI
 
-## Setup
-
-### Client
-
-npm install
-npm run dev
+## Local setup
 
 ### Server
 
+```bash
+cd server
 npm install
+cp .env.example .env
+# Fill MONGO_URL, JWT_SECRET, GROQ_API_KEY, AWS_*, CLIENT_URL=http://localhost:5173
 npm run dev
+```
+
+### Client
+
+```bash
+cd client
+npm install
+cp .env.example .env
+# VITE_API_URL=/api
+npm run dev
+```
+
+## Production deployment
+
+### 1. Render (backend)
+
+- Deploy `server/` folder
+- Set env vars from `server/.env.example`
+- **`CLIENT_URL`** = `https://ai-resume-analysis-wheat.vercel.app` (your Vercel URL, no trailing slash)
+- Health check: open `https://YOUR-SERVICE.onrender.com` → should show API running message
+
+### 2. Vercel (frontend)
+
+**Environment variable (required):**
+
+| Name | Value |
+|------|--------|
+| `VITE_API_URL` | `https://YOUR-SERVICE.onrender.com/api` |
+
+Example:
+
+```
+VITE_API_URL=https://ai-resume-analysis.onrender.com/api
+```
+
+Then **redeploy** (env vars are baked in at build time).
+
+### 3. CORS
+
+Backend allows:
+
+- `http://localhost:5173` (local)
+- `https://ai-resume-analysis-wheat.vercel.app` (production)
+- `CLIENT_URL` from env
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---------|-----|
+| "Cannot reach the server" on phone | Set `VITE_API_URL` on Vercel to Render URL + redeploy |
+| CORS error in browser console | Set `CLIENT_URL` on Render to exact Vercel URL |
+| First request very slow | Render free tier wakes from sleep (~30–60s) |
+| Works on PC but not phone | Same — production must use Render URL, not `localhost` |
