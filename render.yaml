@@ -1,0 +1,14 @@
+# Render Blueprint — optional. You can also configure these in the Render dashboard.
+services:
+  - type: web
+    name: ai-resume-analysis
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_URL
+        value: https://ai-resume-analysis-wheat.vercel.app

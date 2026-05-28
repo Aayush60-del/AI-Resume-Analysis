@@ -7,12 +7,16 @@ const getErrorMessage = (error, fallback = "Something went wrong. Please try aga
     return error.response.data.message;
   }
 
+  if (error.code === "ECONNABORTED" || error.code === "ETIMEDOUT") {
+    return "Request timed out. If this is your first request, the server may be waking up — wait a moment and try again.";
+  }
+
   if (error.message && !error.response) {
     return error.message;
   }
 
   if (error.code === "ERR_NETWORK" || !error.response) {
-    return "Cannot reach the server. Check your connection and try again.";
+    return "Cannot reach the server. Confirm VITE_API_URL on Vercel points to your Render URL and redeploy.";
   }
 
   if (error.message) {

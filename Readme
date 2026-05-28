@@ -69,7 +69,17 @@ Backend allows:
 
 | Symptom | Fix |
 |---------|-----|
-| "Cannot reach the server" on phone | Set `VITE_API_URL` on Vercel to Render URL + redeploy |
-| CORS error in browser console | Set `CLIENT_URL` on Render to exact Vercel URL |
+| "Cannot reach the server" | Set `VITE_API_URL` on Vercel → **redeploy** (Vite bakes env at build time). Open Render URL in browser first to wake the service. |
+| "Route not found" | `VITE_API_URL` must end with `/api`. Wrong: `https://xxx.onrender.com` — Right: `https://xxx.onrender.com/api` |
+| CORS error in browser console | Set `CLIENT_URL` on Render to exact Vercel URL (no trailing slash) |
+| Render deploy fails / crashes | Ensure **Start Command** is `npm start` and **Root Directory** is `server` |
 | First request very slow | Render free tier wakes from sleep (~30–60s) |
-| Works on PC but not phone | Same — production must use Render URL, not `localhost` |
+| Works locally, fails in prod | Local uses Vite proxy `/api` → localhost; prod must use full Render HTTPS URL |
+| SPA 404 on refresh | `client/vercel.json` rewrites non-file routes to `index.html` |
+
+### Verify deployment
+
+1. **Backend:** `https://YOUR-SERVICE.onrender.com/api/health` → JSON `{ "ok": true }`
+2. **Backend root:** `https://YOUR-SERVICE.onrender.com/` → text `API is running`
+3. **Frontend:** DevTools → Network → signup request URL must be `https://YOUR-SERVICE.onrender.com/api/auth/signup` (not `vercel.app/api/...`)
+4. After changing Vercel env vars, trigger a **new deployment** (Redeploy), not just a cache refresh.

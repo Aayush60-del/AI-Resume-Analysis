@@ -7,22 +7,54 @@ const resumeRoutes = require("./routes/resumeRoutes");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" },
   })
 );
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "https://ai-resume-analysis-wheat.vercel.app",
-  process.env.CLIENT_URL,
-].filter(Boolean);
+const normalizeOrigin = (url) =>
+  typeof url === "string" ? url.trim().replace(/\/+$/, "") : "";
+
+const allowedOrigins = new Set(
+  [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://ai-resume-analysis-wheat.vercel.app",
+    normalizeOrigin(process.env.CLIENT_URL),
+  ].filter(Boolean)
+);
+
+const isAllowedOrigin = (origin) => {
+  if (!origin) {
+    return true;
+  }
+
+  const normalized = normalizeOrigin(origin);
+
+  if (allowedOrigins.has(normalized)) {
+    return true;
+  }
+
+  if (/^https:\/\/ai-resume-analysis[a-z0-9-]*\.vercel\.app$/i.test(normalized)) {
+    return true;
+  }
+
+  return false;
+};
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin(origin, callback) {
+      if (isAllowedOrigin(origin)) {
+        return callback(null, true);
+      }
+
+      console.warn("[CORS] Blocked origin:", origin);
+      return callback(new Error(`Origin ${origin} not allowed by CORS`));
+    },
     credentials: true,
   })
 );
@@ -34,6 +66,14 @@ app.use("/api/resume", resumeRoutes);
 
 app.get("/", (req, res) => {
   res.send("AI Resume Analyzer API is running");
+});
+
+app.get("/api/health", (req, res) => {
+  res.json({
+    ok: true,
+    message: "AI Resume Analyzer API is running",
+    timestamp: new Date().toISOString(),
+  });
 });
 
 app.use((req, res) => {
