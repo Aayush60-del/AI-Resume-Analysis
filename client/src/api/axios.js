@@ -23,9 +23,6 @@ if (import.meta.env.PROD && API_BASE_URL) {
 const API = axios.create({
   baseURL: API_BASE_URL || "/api",
   timeout: 120000,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 API.interceptors.request.use(
@@ -42,6 +39,14 @@ API.interceptors.request.use(
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    // FormData must set Content-Type with boundary automatically.
+    // A global "application/json" header breaks multer → req.file is undefined.
+    if (config.data instanceof FormData) {
+      delete config.headers["Content-Type"];
+    } else if (!config.headers["Content-Type"]) {
+      config.headers["Content-Type"] = "application/json";
     }
 
     return config;

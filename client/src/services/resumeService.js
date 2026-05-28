@@ -1,14 +1,15 @@
 import API from "../api/axios";
 
 export const uploadResume = async (file) => {
-  const formData = new FormData();
+  if (!file) {
+    throw new Error("Please select a PDF file");
+  }
 
+  const formData = new FormData();
+  // Must match backend: upload.single("resume")
   formData.append("resume", file);
 
-  const response = await API.post(
-    "/resume/upload",
-    formData
-  );
+  const response = await API.post("/resume/upload", formData);
 
   return response.data;
 };
