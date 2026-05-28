@@ -7,12 +7,6 @@ const resumeRoutes = require("./routes/resumeRoutes");
 
 const app = express();
 
-const allowedOrigins = [
-  process.env.CLIENT_URL,
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-].filter(Boolean);
-
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" },
@@ -21,14 +15,7 @@ app.use(
 
 app.use(
   cors({
-    origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-        return;
-      }
-
-      callback(new Error("Not allowed by CORS"));
-    },
+    origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
@@ -49,10 +36,6 @@ app.use((req, res) => {
 });
 
 app.use((error, req, res, next) => {
-  if (error.message === "Not allowed by CORS") {
-    return res.status(403).json({ message: "Origin not allowed" });
-  }
-
   if (error.code === "LIMIT_FILE_SIZE") {
     return res.status(400).json({
       message: "PDF file must be 5MB or smaller",
