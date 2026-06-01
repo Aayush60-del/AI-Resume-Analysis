@@ -547,9 +547,25 @@ body.sidebar-open .menu-toggle span:nth-child(3) {
 }
 
 .tool-grid,
+.info-grid,
 .optimization-summary {
   gap: 1rem;
   grid-template-columns: 1fr;
+}
+
+.demo-page,
+.info-page {
+  padding: var(--section-gap) var(--page-gutter) 3rem;
+}
+
+.demo-actions,
+.info-return {
+  flex-direction: column;
+}
+
+.demo-actions a,
+.info-return a {
+  width: 100%;
 }
 
 .tool-panel {
@@ -799,6 +815,20 @@ body.sidebar-open .menu-toggle span:nth-child(3) {
 
   .tool-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .demo-actions,
+  .info-return {
+    flex-direction: row;
+  }
+
+  .demo-actions a,
+  .info-return a {
+    width: auto;
   }
 
   .analysis-grid {

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContextValue";
 
 const links = [
@@ -15,13 +15,7 @@ const TopNav = ({ active = "Home", compact = false }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
   const { token, user, logout } = useContext(AuthContext);
-
-  useEffect(() => {
-    setMenuOpen(false);
-    setAccountOpen(false);
-  }, [location.pathname]);
 
   useEffect(() => {
     document.body.classList.toggle("nav-open", menuOpen);

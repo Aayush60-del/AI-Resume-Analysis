@@ -120,10 +120,10 @@ const HomePage = () => {
       <footer className="site-footer">
         <strong>ResumAI</strong>
         <span>Copyright 2026 ResumAI Engineering. Pure performance.</span>
-        <a href="/">Privacy</a>
-        <a href="/">Terms</a>
-        <a href="/">API</a>
-        <a href="/">Support</a>
+        <a href="/info/privacy">Privacy</a>
+        <a href="/info/terms">Terms</a>
+        <a href="/info/api">API</a>
+        <a href="/info/support">Support</a>
       </footer>
     </main>
   );

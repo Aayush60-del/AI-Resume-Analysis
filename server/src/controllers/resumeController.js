@@ -104,6 +104,34 @@ const uploadResume = async (req, res) => {
   }
 };
 
+const uploadDemoResume = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const resumeData = await pdfParse(req.file.buffer);
+
+    if (!resumeData.text?.trim()) {
+      return res.status(400).json({
+        message: "Could not read text from this PDF. Please upload a text-based resume PDF.",
+      });
+    }
+
+    const analysisPayload = await analyzeResume(resumeData.text);
+
+    res.status(200).json({
+      message: "Demo resume analyzed successfully",
+      analysis: {
+        _id: "demo-analysis",
+        ...analysisPayload,
+      },
+    });
+  } catch (error) {
+    return sendError(res, error);
+  }
+};
+
 const getResumeHistory = async (req, res) => {
   try {
     const history = await analysisModel
@@ -143,4 +171,4 @@ const getSingleAnalysis = async (req, res) => {
   }
 };
 
-module.exports = { uploadResume, getResumeHistory, getSingleAnalysis };
+module.exports = { uploadResume, uploadDemoResume, getResumeHistory, getSingleAnalysis };

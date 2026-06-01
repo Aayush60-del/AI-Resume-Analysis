@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContextValue";
 
 const navItems = [
@@ -14,13 +14,8 @@ const navItems = [
 
 const DashboardSidebar = ({ active = "dashboard" }) => {
   const navigate = useNavigate();
-  const location = useLocation();
   const { logout, user } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    setOpen(false);
-  }, [location.pathname]);
 
   useEffect(() => {
     document.body.classList.toggle("sidebar-open", open);

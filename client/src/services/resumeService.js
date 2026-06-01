@@ -14,6 +14,19 @@ export const uploadResume = async (file) => {
   return response.data;
 };
 
+export const uploadDemoResume = async (file) => {
+  if (!file) {
+    throw new Error("Please select a PDF file");
+  }
+
+  const formData = new FormData();
+  formData.append("resume", file);
+
+  const response = await API.post("/resume/demo-upload", formData);
+
+  return response.data;
+};
+
 export const getHistory = async () => {
   const response = await API.get("/resume/history");
 

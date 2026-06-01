@@ -5,7 +5,7 @@ const upload = require("../middleware/upload");
 const protect = require("../middleware/authMiddleware");
 const { uploadLimiter } = require("../middleware/rateLimiter");
 
-const { uploadResume, getResumeHistory, getSingleAnalysis } = require("../controllers/resumeController");
+const { uploadResume, uploadDemoResume, getResumeHistory, getSingleAnalysis } = require("../controllers/resumeController");
 const { deleteResume } = require("../controllers/deleteResume");
 
 const handleUpload = (req, res, next) => {
@@ -19,6 +19,7 @@ const handleUpload = (req, res, next) => {
 };
 
 router.post("/upload", protect, uploadLimiter, handleUpload, uploadResume);
+router.post("/demo-upload", uploadLimiter, handleUpload, uploadDemoResume);
 router.delete("/delete/:id", protect, deleteResume);
 router.get("/history", protect, getResumeHistory);
 router.get("/analysis/:id", protect, getSingleAnalysis);

@@ -13,36 +13,33 @@ const AnalysisPage = ({ initialAnalysis = null }) => {
   const { id } = useParams();
   const isGuestView = location.pathname === "/demo";
 
-  const [analysis, setAnalysis] = useState(null);
-  const [loading, setLoading] = useState(!isGuestView && Boolean(id));
+  const [analysis, setAnalysis] = useState(() => (isGuestView ? initialAnalysis : null));
+  const [loading, setLoading] = useState(() => !isGuestView && Boolean(id));
   const [error, setError] = useState("");
 
   useEffect(() => {
     if (isGuestView) {
-      setAnalysis(initialAnalysis);
-      setLoading(false);
-      setError("");
-      return;
-    }
-
-    if (!id) {
-      setAnalysis(null);
-      setLoading(false);
-      return;
-    }
-
-    const stateMatch = location.state?.analysis;
-
-    if (stateMatch?._id === id) {
-      setAnalysis(stateMatch);
-      setLoading(false);
-      setError("");
       return;
     }
 
     let cancelled = false;
 
     const fetchAnalysis = async () => {
+      if (!id) {
+        setAnalysis(null);
+        setLoading(false);
+        return;
+      }
+
+      const stateMatch = location.state?.analysis;
+
+      if (stateMatch?._id === id) {
+        setAnalysis(stateMatch);
+        setLoading(false);
+        setError("");
+        return;
+      }
+
       setLoading(true);
       setError("");
       setAnalysis(null);

@@ -10,6 +10,7 @@ import NotFoundPage from "./Components/NotFoundPage";
 import OptimizationsPage from "./Components/OptimizationsPage";
 import RegisterPage from "./Components/RegisterPage";
 import SettingsPage from "./Components/SettingsPage";
+import StaticInfoPage from "./Components/StaticInfoPage";
 import ProtectedRoute from "./routes/ProtectedRoutes";
 import GuestRoute from "./routes/GuestRoute";
 
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/demo",
     element: <DemoAnalysisPage />,
+  },
+  {
+    path: "/info/:page",
+    element: <StaticInfoPage />,
   },
   {
     path: "/dashboard",
