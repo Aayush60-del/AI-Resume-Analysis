@@ -1,85 +1,304 @@
-# ResumAI
+<div align="center">
 
-AI-powered ATS Resume Analyzer
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:667eea,100:764ba2&height=220&section=header&text=ResumAI&fontSize=55&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=AI-Powered%20ATS%20Resume%20Analyzer&descAlignY=58&descSize=18" />
 
-## Tech Stack
+<p>
+  <img src="https://img.shields.io/badge/React%20%2B%20Vite-Frontend-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
+  <img src="https://img.shields.io/badge/Node.js%20%2B%20Express-Backend-339933?style=for-the-badge&logo=node.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white" />
+  <img src="https://img.shields.io/badge/AWS%20S3-Storage-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white" />
+  <img src="https://img.shields.io/badge/Groq-AI-000000?style=for-the-badge" />
+</p>
 
-- React + Vite (Vercel)
-- Node.js + Express (Render)
-- MongoDB
-- AWS S3
-- Groq AI
+<h3>
+  Upload your resume. Get ATS insights. Improve your chances of getting shortlisted.
+</h3>
 
-## Local setup
+<p>
+  <a href="https://ai-resume-analysis-wheat.vercel.app">
+    <img src="https://img.shields.io/badge/Live%20Demo-Visit%20App-764ba2?style=for-the-badge&logo=vercel&logoColor=white" />
+  </a>
+  <a href="https://github.com/Aayush60-del">
+    <img src="https://img.shields.io/badge/GitHub-Aayush60--del-181717?style=for-the-badge&logo=github" />
+  </a>
+</p>
 
-### Server
+</div>
+
+---
+
+## ✨ What is ResumAI?
+
+**ResumAI** is an AI-powered resume analyzer that helps users check how well their resume performs for ATS-based screening.
+It reviews resumes, generates smart feedback, detects missing skills, and gives improvement suggestions using **Groq AI**.
+
+The platform is built with a modern full-stack architecture using **React, Node.js, Express, MongoDB, AWS S3, and Groq AI**.
+
+---
+
+## 🚀 Key Features
+
+<table>
+  <tr>
+    <td width="50%">
+      <h3>📤 Resume Upload</h3>
+      <p>Upload resume files securely and store them using AWS S3.</p>
+    </td>
+    <td width="50%">
+      <h3>🤖 AI Analysis</h3>
+      <p>Analyze resumes using Groq AI and generate useful career feedback.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>📊 ATS Insights</h3>
+      <p>Get ATS-style feedback, score, strengths, and weaknesses.</p>
+    </td>
+    <td width="50%">
+      <h3>🧠 Skill Gap Detection</h3>
+      <p>Find missing skills and improvement areas for better job matching.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>🔐 Authentication</h3>
+      <p>Secure user login and signup using JWT-based authentication.</p>
+    </td>
+    <td width="50%">
+      <h3>🌐 Production Ready</h3>
+      <p>Frontend deployed on Vercel and backend deployed on Render.</p>
+    </td>
+  </tr>
+</table>
+
+---
+
+## 🛠️ Tech Stack
+
+<div align="center">
+
+| Frontend | Backend    | Database      | AI & Storage   | Deployment |
+| -------- | ---------- | ------------- | -------------- | ---------- |
+| React    | Node.js    | MongoDB       | Groq AI        | Vercel     |
+| Vite     | Express.js | Mongoose      | AWS S3         | Render     |
+| CSS      | JWT Auth   | MongoDB Atlas | Resume Uploads |            |
+
+</div>
+
+---
+
+## 🧩 Project Flow
+
+```mermaid
+flowchart LR
+    A[User Uploads Resume] --> B[Resume Stored in AWS S3]
+    B --> C[Backend Extracts Resume Data]
+    C --> D[Groq AI Analyzes Content]
+    D --> E[ATS Score + Feedback Generated]
+    E --> F[User Views Suggestions]
+```
+
+---
+
+## 📂 Folder Structure
+
+```bash
+ResumAI/
+├── client/                  # React + Vite frontend
+│   ├── src/
+│   ├── .env.example
+│   └── package.json
+│
+├── server/                  # Node.js + Express backend
+│   ├── src/
+│   ├── .env.example
+│   └── package.json
+│
+└── README.md
+```
+
+---
+
+## ⚙️ Local Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+cd YOUR_REPO_NAME
+```
+
+---
+
+## 🖥️ Backend Setup
 
 ```bash
 cd server
 npm install
 cp .env.example .env
-# Fill MONGO_URL, JWT_SECRET, GROQ_API_KEY, AWS_*, CLIENT_URL=http://localhost:5173
 npm run dev
 ```
 
-### Client
+Add your backend environment variables in `server/.env`:
+
+```env
+MONGO_URL=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+GROQ_API_KEY=your_groq_api_key
+
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_REGION=your_aws_region
+AWS_BUCKET_NAME=your_s3_bucket_name
+
+CLIENT_URL=http://localhost:5173
+PORT=5000
+```
+
+Backend will run on:
+
+```bash
+http://localhost:5000
+```
+
+---
+
+## 🌐 Frontend Setup
 
 ```bash
 cd client
 npm install
 cp .env.example .env
-# VITE_API_URL=/api
 npm run dev
 ```
 
-## Production deployment
+Add your frontend environment variable in `client/.env`:
 
-### 1. Render (backend)
-
-- Deploy `server/` folder
-- Set env vars from `server/.env.example`
-- **`CLIENT_URL`** = `https://ai-resume-analysis-wheat.vercel.app` (your Vercel URL, no trailing slash)
-- Health check: open `https://YOUR-SERVICE.onrender.com` → should show API running message
-
-### 2. Vercel (frontend)
-
-**Environment variable (required):**
-
-| Name | Value |
-|------|--------|
-| `VITE_API_URL` | `https://YOUR-SERVICE.onrender.com/api` |
-
-Example:
-
-```
-VITE_API_URL=https://ai-resume-analysis.onrender.com/api
+```env
+VITE_API_URL=/api
 ```
 
-Then **redeploy** (env vars are baked in at build time).
+Frontend will run on:
 
-### 3. CORS
+```bash
+http://localhost:5173
+```
 
-Backend allows:
+---
 
-- `http://localhost:5173` (local)
-- `https://ai-resume-analysis-wheat.vercel.app` (production)
-- `CLIENT_URL` from env
+## 🚀 Production Deployment
 
-### Troubleshooting
+<table>
+  <tr>
+    <td width="50%">
+      <h3>Backend — Render</h3>
+      <ul>
+        <li>Deploy the <code>server/</code> folder</li>
+        <li>Add env variables from <code>server/.env.example</code></li>
+        <li>Set <code>CLIENT_URL</code> to your Vercel frontend URL</li>
+      </ul>
+    </td>
+    <td width="50%">
+      <h3>Frontend — Vercel</h3>
+      <ul>
+        <li>Deploy the <code>client/</code> folder</li>
+        <li>Add <code>VITE_API_URL</code></li>
+        <li>Redeploy after adding env variables</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-| Symptom | Fix |
-|---------|-----|
-| "Cannot reach the server" | Set `VITE_API_URL` on Vercel → **redeploy** (Vite bakes env at build time). Open Render URL in browser first to wake the service. |
-| "Route not found" | `VITE_API_URL` must end with `/api`. Wrong: `https://xxx.onrender.com` — Right: `https://xxx.onrender.com/api` |
-| CORS error in browser console | Set `CLIENT_URL` on Render to exact Vercel URL (no trailing slash) |
-| Render deploy fails / crashes | Ensure **Start Command** is `npm start` and **Root Directory** is `server` |
-| First request very slow | Render free tier wakes from sleep (~30–60s) |
-| Works locally, fails in prod | Local uses Vite proxy `/api` → localhost; prod must use full Render HTTPS URL |
-| SPA 404 on refresh | `client/vercel.json` rewrites non-file routes to `index.html` |
+### Backend Environment
 
-### Verify deployment
+```env
+MONGO_URL=
+JWT_SECRET=
+GROQ_API_KEY=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=
+AWS_BUCKET_NAME=
+CLIENT_URL=https://ai-resume-analysis-wheat.vercel.app
+PORT=5000
+```
 
-1. **Backend:** `https://YOUR-SERVICE.onrender.com/api/health` → JSON `{ "ok": true }`
-2. **Backend root:** `https://YOUR-SERVICE.onrender.com/` → text `API is running`
-3. **Frontend:** DevTools → Network → signup request URL must be `https://YOUR-SERVICE.onrender.com/api/auth/signup` (not `vercel.app/api/...`)
-4. After changing Vercel env vars, trigger a **new deployment** (Redeploy), not just a cache refresh.
+### Frontend Environment
+
+```env
+VITE_API_URL=https://YOUR-SERVICE.onrender.com/api
+```
+
+---
+
+## 🔐 CORS Setup
+
+Make sure your backend allows your deployed frontend URL.
+
+Correct:
+
+```bash
+https://ai-resume-analysis-wheat.vercel.app
+```
+
+Wrong:
+
+```bash
+https://ai-resume-analysis-wheat.vercel.app/
+```
+
+Avoid adding a trailing slash in `CLIENT_URL`.
+
+---
+
+## 📸 Screenshots
+
+Add your project screenshots here:
+
+<table>
+  <tr>
+    <td><img src="./screenshots/home.png" alt="Home Page" /></td>
+    <td><img src="./screenshots/upload.png" alt="Upload Page" /></td>
+  </tr>
+  <tr>
+    <td><img src="./screenshots/result.png" alt="Analysis Result" /></td>
+    <td><img src="./screenshots/dashboard.png" alt="Dashboard" /></td>
+  </tr>
+</table>
+
+---
+
+## 🌱 Future Improvements
+
+* Job description based resume matching
+* Resume improvement suggestions with priority level
+* Downloadable ATS analysis report
+* Resume history dashboard
+* Admin analytics panel
+* Multiple resume comparison
+
+---
+
+## 👨‍💻 Author
+
+<div align="center">
+
+### Ayush Negi
+
+<p>
+  <a href="https://github.com/Aayush60-del">
+    <img src="https://img.shields.io/badge/GitHub-Aayush60--del-181717?style=for-the-badge&logo=github" />
+  </a>
+</p>
+
+</div>
+
+---
+
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:764ba2,100:667eea&height=120&section=footer" />
+
+### ⭐ If you like this project, give it a star!
+
+</div>
